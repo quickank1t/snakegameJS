@@ -1,0 +1,27 @@
+
+div.sticky {
+    position: -webkit-sticky;
+	right: 0px;
+    bottom:0;
+    
+	
+    padding: 0px;
+	height: 200;
+	width: 200;
+    font-size: 20px;
+    position: fixed;
+    
+}
+div.sticky2 {
+    position: -webkit-sticky;
+	right: 0px;
+    bottom:0;
+    background-color: #bd5d38;
+	height: 350px;
+	width: 450px;
+    padding: 20px;
+    font-size: 14px;
+    position: fixed;
+    word-spacing: 10px;
+    color:white;
+}
