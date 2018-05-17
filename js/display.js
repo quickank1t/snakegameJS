@@ -42,5 +42,11 @@ function flash(){
     $imgDraw.fillRect( xcord+distance-1 , ycord, distance,distance);
     $blink = true;
   }
-
+}
+function bust(player){
+  var color = (player == 1 ) ?  'red' : 'black';
+  document.getElementById('noti').hidden = false;
+  document.getElementById(color).hidden = false;
+  document.getElementById('control').hidden = true;
+  document.getElementById('auto').hidden = true;
 }
