@@ -59,6 +59,7 @@ function isValid(nextMove){
     return false;
   }
 }
+
 function levelUp(nextMove){
   try{
     return(($gameMatrix[nextMove[0]][nextMove[1]] === 3 ) ? true : false);

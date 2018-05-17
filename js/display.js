@@ -6,7 +6,6 @@ function renderSnake(player){
     $imgDraw.fillRect(value[0] * snakeSize-1 , value[1]* snakeSize-1, snakeSize-1,snakeSize-1);
   });
 }
-
 function renderFood(){
   $imgDraw.fillRect($food[0][0] * snakeSize-1 , $food[0][1] * snakeSize-1 , snakeSize-1,snakeSize-1);
 }

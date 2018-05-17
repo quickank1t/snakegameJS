@@ -5,7 +5,6 @@ var $gameMatrix , $food=[], $autopilot, $gameMatrix4Bot;
 var $playerDirection, $playerSnake=[];
 var $computerSnake=[],$computerDirection;
 
-
 function main(){
   document.getElementById('auto').hidden = false;
   document.getElementById('start').hidden = true;

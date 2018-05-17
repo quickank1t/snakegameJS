@@ -7,6 +7,7 @@ var findShortestPath = function(startCoordinates, grid) {
     path: [],
     status: 'Start'
   };
+  
   var queue = [location];
   while (queue.length > 0) {
     var currentLocation = queue.shift();
