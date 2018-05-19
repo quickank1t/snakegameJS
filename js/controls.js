@@ -83,8 +83,10 @@ function genrateFood(){
 function sync(player,nextMove,tail,isWithTail){
   $gameMatrix[nextMove[0]][nextMove[1]] = player;
   $gameMatrix4Bot[nextMove[0]][nextMove[1]] = 'Obstacle';
+  $grid4shortestpath.setWalkableAt([nextMove[0]], [nextMove[1]], false);
   if (isWithTail) $gameMatrix[tail[0]][tail[1]]=0;
   if (isWithTail) $gameMatrix4Bot[tail[0]][tail[1]]='Empty';
+  if (isWithTail) $grid4shortestpath.setWalkableAt([tail[0]],[tail[1]], true);
 }
 function saveFunction(head,player){
   var newheadx= head[0];

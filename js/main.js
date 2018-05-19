@@ -1,7 +1,7 @@
 const snakeSize=20,screenSize=600,screenWidth=600,screenHeight=600;
 var $imgDraw, $blink=true,$gameOver=false;
 
-var $gameMatrix , $food=[], $autopilot, $gameMatrix4Bot;
+var $gameMatrix , $food=[], $autopilot, $gameMatrix4Bot , $grid4shortestpath;
 var $playerDirection, $playerSnake=[];
 var $computerSnake=[],$computerDirection;
 
@@ -12,6 +12,8 @@ function main(){
   $imgDraw = canvas.getContext("2d");
   $gameMatrix = initGame();
   $gameMatrix4Bot =makeMatrix();
+  $grid4shortestpath = new PF.Grid(30, 30);
+
   document.addEventListener("keydown",(event)=>{
     console.log(event);
     if(event.keyCode == "68" && $playerDirection != "Left"){
@@ -41,7 +43,7 @@ function main(){
       }
   });
 
-   loadSnake();
+  loadSnake();
   renderSnake(1);
   renderSnake(2);
   startGame();
@@ -59,12 +61,13 @@ function loadSnake(){
   $computerSnake.push([0,1,'down']);
   $playerDirection = 'Down';
   $computerDirection='Down';
-  $speed=1100;
+  $speed= 1100 -  document.getElementById("myRange").value * 100;
 }
 
 
 
 function startGame(){
+
   var temp = $gameMatrix4Bot;
   playBestMove(2,temp);
   temp=[];
@@ -80,11 +83,17 @@ function startGame(){
 }
 
 function changeSpeed(){
-  $speed = 1100 - document.getElementById("myRange").value;
+  $speed = 1100 - document.getElementById("myRange").value * 100;
+  //alert($speed);
 }
 
 function playBestMove(player,grid){
   (player == 1 ) ?  snake = $playerSnake : snake = $computerSnake;
+  var gridToPass = $grid4shortestpath;
+  var finder = new PF.AStarFinder();
+  var path = finder.findPath((player == 1 ) ? $playerSnake[0][0] : $computerSnake[0][0], (player == 1 ) ? $playerSnake[0][1] : $computerSnake[0][1], $food[0][0], $food[0][1], gridToPass);
+  console.log(path);
+
   grid[snake[0][0]][snake[0][1]] = "Start";
   var root = findShortestPath([snake[0][0],snake[0][1]],grid);
   grid=removeVisited(grid);
@@ -109,7 +118,6 @@ function playBestMove(player,grid){
 
 function autopilot(val){
   $autopilot=val;
-  $speed=($autopilot)?50:1100;
   if(($autopilot)){
     document.getElementById('control').hidden = false;
     document.getElementById('auto').hidden = true;
@@ -131,6 +139,16 @@ function makeMatrix(){
   for (var i = 0; i < 30; i++) {
     for (var j = 0; j < 30; j++) {
       grid[i][j] = 'Empty';
+  }
+}
+return grid;
+}
+
+function makeMatrix2(){
+  var grid = initGame();
+  for (var i = 0; i < 30; i++) {
+    for (var j = 0; j < 30; j++) {
+      grid[i][j] = 0;
   }
 }
 return grid;
