@@ -24,7 +24,5 @@ Note: The human player i.e the black snake will always hold an advantage
 2.  You can pass over your the control to the bot as well by clicking the autopilot mode. In this mode both the controls will be handled by the bot
 
 3. :new: Select algorithm for the black snake run time via the radio box 
- 
-## Demo
 
 
