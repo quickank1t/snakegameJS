@@ -2,7 +2,7 @@ const snakeSize=20,screenSize=600,screenWidth=600,screenHeight=600;
 var $imgDraw, $blink=true,$gameOver=false;
 
 var $gameMatrix , $food=[], $autopilot, $gameMatrix4Bot , $grid4shortestpath;
-var $playerDirection, $playerSnake=[];
+var $playerDirection, $playerSnake=[], $playerAlgorithm = 'Dijkstra';
 var $computerSnake=[],$computerDirection;
 
 function main(){
@@ -50,9 +50,9 @@ function main(){
 }
 
 function loadSnake(){
-  $gameMatrix[29][8]= 3;//food
-  $gameMatrix4Bot[29][8]= 'Goal';//food
-  $food.push([29,8]);
+  $gameMatrix[0][0]= 3;//food
+  $gameMatrix4Bot[0][0]= 'Goal';//food
+  $food.push([0,0]);
   $playerSnake.unshift([29,1,'down']);
   $playerSnake.unshift([29,2,'down']);
   $playerSnake.unshift([29,3,'down']);
@@ -64,16 +64,14 @@ function loadSnake(){
   $speed= 1100 -  document.getElementById("myRange").value * 100;
 }
 
-
-
 function startGame(){
 
   var temp = $gameMatrix4Bot;
+  // playMove(2,$grid4shortestpath,$botAlgoritm);
   playBestMove(2,temp);
-  temp=[];
   moveSnake(2,$computerDirection);
   var temp = $gameMatrix4Bot;
-  if ($autopilot) playBestMove(1,temp);
+  if ($autopilot) playMove(1,$grid4shortestpath,$playerAlgorithm);
   temp=[];
   moveSnake(1,$playerDirection);
   if(!$gameOver){
@@ -89,10 +87,6 @@ function changeSpeed(){
 
 function playBestMove(player,grid){
   (player == 1 ) ?  snake = $playerSnake : snake = $computerSnake;
-  var gridToPass = $grid4shortestpath;
-  var finder = new PF.AStarFinder();
-  var path = finder.findPath((player == 1 ) ? $playerSnake[0][0] : $computerSnake[0][0], (player == 1 ) ? $playerSnake[0][1] : $computerSnake[0][1], $food[0][0], $food[0][1], gridToPass);
-  console.log(path);
 
   grid[snake[0][0]][snake[0][1]] = "Start";
   var root = findShortestPath([snake[0][0],snake[0][1]],grid);
@@ -116,16 +110,7 @@ function playBestMove(player,grid){
   }
 }
 
-function autopilot(val){
-  $autopilot=val;
-  if(($autopilot)){
-    document.getElementById('control').hidden = false;
-    document.getElementById('auto').hidden = true;
-  }else{
-    document.getElementById('auto').hidden = false;
-    document.getElementById('control').hidden = true;
-  }
-}
+
 function initGame(){
   var row=[];
   for(var i=0;i<30;i++){
@@ -160,4 +145,39 @@ function removeVisited(grid){
   }
 }
 return grid;
+}
+
+function playMove(player,gridInstance,algorithm){
+  (player == 1 ) ?  snake = $playerSnake : snake = $computerSnake;
+  var gridBackup = $grid4shortestpath.clone();
+  switch((player == 1 ) ? $playerAlgorithm : $botAlgoritm){
+    case 'Astar':
+      var finder = new PF.AStarFinder();
+      break;
+    case 'Dijkstra':
+      var finder = new PF.DijkstraFinder();
+      break;
+    case 'BFS':
+      var finder = new PF.BreadthFirstFinder();
+      break;
+    case 'BestFirstFinder':
+      var finder = new PF.BestFirstFinder();
+      break;
+
+  }
+  try{
+    var predict = direction(finder.findPath(snake[0][0], snake[0][1], $food[0][0], $food[0][1], gridInstance));
+    (player == 1 ) ?  $playerDirection = predict : $computerDirection= predict ;
+  }
+  catch(e){
+    saveFunction([snake[0][0],snake[0][1]],player);
+  }
+  $grid4shortestpath = gridBackup;
+}
+
+function direction(path){
+  if (path[0][0]== path[1][0] && (path[0][1]==path[1][1]+1 )) return 'Up';
+  if (path[0][0]== path[1][0] && (path[0][1]==path[1][1]-1 )) return 'Down';
+  if (path[0][0]== path[1][0]-1 && (path[0][1]==path[1][1] )) return 'Right';
+  if (path[0][0]== path[1][0]+1 && (path[0][1]==path[1][1])) return 'Left';
 }

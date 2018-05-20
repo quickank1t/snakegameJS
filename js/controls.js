@@ -41,7 +41,7 @@ function moveSnake(player,direction){
       bust(player);
       $gameOver=true;
     }
-    (player == 1 ) ?   $playerSnake =  snake :  $computerSnake = snake ;
+    (player == 1)? $playerSnake =  snake :  $computerSnake = snake ;
   }else{
     $gameOver=true;
     bust(player);
@@ -83,10 +83,14 @@ function genrateFood(){
 function sync(player,nextMove,tail,isWithTail){
   $gameMatrix[nextMove[0]][nextMove[1]] = player;
   $gameMatrix4Bot[nextMove[0]][nextMove[1]] = 'Obstacle';
-  $grid4shortestpath.setWalkableAt([nextMove[0]], [nextMove[1]], false);
+
+  $grid4shortestpath.setWalkableAt(nextMove[0], nextMove[1], false);
   if (isWithTail) $gameMatrix[tail[0]][tail[1]]=0;
   if (isWithTail) $gameMatrix4Bot[tail[0]][tail[1]]='Empty';
-  if (isWithTail) $grid4shortestpath.setWalkableAt([tail[0]],[tail[1]], true);
+  if (isWithTail) $grid4shortestpath.setWalkableAt(tail[0],tail[1], true);
+}
+function syncSingle(player,value,walkable){
+  $grid4shortestpath.setWalkableAt(value[0], value[1], false);
 }
 function saveFunction(head,player){
   var newheadx= head[0];

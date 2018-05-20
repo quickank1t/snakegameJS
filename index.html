@@ -37,6 +37,26 @@
               <centeR><button type="button" class="btn btn-danger">Take Control</button></centeR>
             </div>
           </div>
+          <div id='algorithmdisplay' class="col-lg-4" hidden>
+            <div class="form-group" >
+              <label>Select Algorithm</label>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios"  value="Astar"  onchange="$playerAlgorithm=this.value">A Star
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios" value="Dijkstra" checked="true" onchange="$playerAlgorithm=this.value">Dijkstra
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios"  value="BFS" onchange="$playerAlgorithm=this.value">BFS
+                </label>
+              </div>
+            </div>
+          </div>
           <div id='noti' class="col-lg-4" hidden>
             <div class="alert alert"style="background-color: black;" role="alert" onclick="autopilot(false)">
               <h4 class="alert-heading"><centeR><kbd style="background-color: black;"><p id='black' hidden>Black Won</p><p id='red' hidden>Red Won</p> </KBD></center></h4>

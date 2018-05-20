@@ -4,6 +4,7 @@ function renderSnake(player){
   snake.forEach((value)=>{
     (player === 1)? $imgDraw.fillStyle="#000000" : $imgDraw.fillStyle="#FF0000";
     $imgDraw.fillRect(value[0] * snakeSize-1 , value[1]* snakeSize-1, snakeSize-1,snakeSize-1);
+    sync(player,value,false);
   });
 }
 function renderFood(){
@@ -48,4 +49,18 @@ function bust(player){
   document.getElementById(color).hidden = false;
   document.getElementById('control').hidden = true;
   document.getElementById('auto').hidden = true;
+  document.getElementById('algorithmdisplay').hidden = true;
+}
+
+function autopilot(val){
+  $autopilot=val;
+  if(($autopilot)){
+    document.getElementById('control').hidden = false;
+    document.getElementById('algorithmdisplay').hidden = false;
+    document.getElementById('auto').hidden = true;
+  }else{
+    document.getElementById('auto').hidden = false;
+    document.getElementById('algorithmdisplay').hidden = true;
+    document.getElementById('control').hidden = true;
+  }
 }
