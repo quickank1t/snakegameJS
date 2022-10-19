@@ -1,6 +1,6 @@
 # Two player Snake
 
-Compete with an Snake bot in the same board. The Objective of the game is to collect more food while avoiding to clash the opponent and the border. Find the <a href='https://quickank1t.github.io/snake/index.html'> Demo </a> here :boom:
+Compete with an Snake bot in the same board. The Objective of the game is to collect more food while avoiding to clash the opponent and the border. Find the <a href='https://quickank1t.github.io/snakegameJS/index.html'> Demo </a> here :boom:
 
 ![Image of snake](img/snake.gif)
 
